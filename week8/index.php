@@ -2,15 +2,9 @@
 <html lang="en">
 <body>
     <?php
-    $x = 123;
-    $y = "Hello World!";
-    $z = 98.2;
+    $x = 8;
+    $y = 46;
 
-    var_dump($x);
-    echo "<br>";
-    var_dump($y);
-    echo "<br>";
-    var_dump($z);
-    ?>1
+    echo $x * $y;
 </body>
 </html>
