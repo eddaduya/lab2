@@ -2,10 +2,7 @@
 <html lang="en">
 <body>
     <?php
-    function name() {
-        echo "Erika Alessandra Daduya :)";
-    }
-
-    name(); 
+    $pastel = array("green", "violet", "pink");
+    echo count($pastel);
 </body>
 </html>
