@@ -2,7 +2,13 @@
 <html lang="en">
 <body>
     <?php
-    $pastel = array("green", "violet", "pink");
-    echo count($pastel);
+    function myfunction() {
+        $GLOBALS["x"] = 100;
+      }
+      
+      myfunction();
+      
+      echo $GLOBALS["x"];
+      echo $x;
 </body>
 </html>
