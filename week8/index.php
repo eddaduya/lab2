@@ -2,11 +2,15 @@
 <html lang="en">
 <body>
     <?php
-    $x = 10;
-    $y = 85;
+    $name = "Erika Daduya";
+    $x = 18;
+    $y = 16;
 
-    echo $x;
-    echo $y;
+    echo "Hello World!<br>";
+    echo "Mickey Mouse";
+
+    print "<h2>" . $name . "</h2>";
+    print $x + $y; 
     ?>1
 </body>
 </html>
