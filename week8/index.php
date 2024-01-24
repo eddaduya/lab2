@@ -2,9 +2,10 @@
 <html lang="en">
 <body>
     <?php
-    $x = 8;
-    $y = 46;
-
-    echo $x * $y;
+    $x = 90;
+    if ($x >= 65){
+        echo "Good Job!";
+    }
+    ?>
 </body>
 </html>
