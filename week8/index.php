@@ -2,13 +2,8 @@
 <html lang="en">
 <body>
     <?php
-    function myfunction() {
-        $GLOBALS["x"] = 100;
-      }
-      
-      myfunction();
-      
-      echo $GLOBALS["x"];
-      echo $x;
+    $str = "Visit W3Schools";
+    $pattern = "/w3schools/i";
+    echo preg_match($pattern, $str);
 </body>
 </html>
