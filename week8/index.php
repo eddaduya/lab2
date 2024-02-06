@@ -7,85 +7,7 @@
         <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@300&display=swap" rel="stylesheet">
         <title>Profile</title>
     <style>
-        @font-face {
-            font-family: "myFont";
-            src: url(./fonts/baloo.regular.ttf);
-        }
-        h2 {
-            font-family: "myFont";
-            text-align: center;
-            line-height: 1.0;
-        }
-        p {
-            font-family: 'Rubik', sans-serif;
-            line-height: 1.5;
-        }
-        body {
-            display: flex;
-            justify-content: center;
-            background: url(https://media0.giphy.com/media/v1.Y2lkPTc5MGI3NjExNTJ6cXFianN1Yzk1MDJsMTQwYzcxZWFrMjZib3F5NXlwYzRtMTN1NCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9cw/Thw1a3yuO9jAHlDiRE/giphy.gif);
-        }
-        img {
-            display: block;
-            margin-left: auto;
-            margin-right: auto;
-        }
-        .container {
-            position: relative;
-            width: 1100px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 30px;
-            margin-top: auto;
-        }
-
-        .container .card {
-            position: relative;
-            width: 310px;
-            height: 375px;
-            background: #F9FACA;
-            margin: 30px 20px;
-            padding: 20px 15px;
-            display: flex;
-            flex-direction: column;
-            margin-top: 4%;
-            border-radius: 10px;
-        }
         
-        .container .card2 {
-            position: relative;
-            width: 310px;
-            height: 375px;
-            background: #cecece;
-            margin: 30px 20px;
-            padding: 20px 15px;
-            display: flex;
-            flex-direction: column;
-            margin-top: 4%;
-            border-radius: 10px;
-        }
-
-        .container .quote{
-            width: 900px;
-            height: 80px;
-            position: absolute;
-            bottom: -80px;
-            background: #cecece;
-            text-align: center;
-            border-radius: 10px;
-        }
-        @media only screen and (max-width: 768px) {
-    .container{
-        flex-direction: column;
-    }
-    .card{
-        background-color: aliceblue;
-    }
-    .quote em{
-        color: purple !important;
-    }
-}
     </style>
     <link rel="stylesheet" href="./style.css">
     </head>
@@ -145,6 +67,132 @@
                 <h1><em>“Be brave. Take risks. Nothing can substitute experience.”</em></h1>
             </div>
 
+            <div class="form">
+                <div>
+                <?php
+                // define variables and set to empty values
+                $nameErr = $emailErr = $genderErr = $websiteErr = "";
+                $name = $email = $gender = $comment = $website = "";
+
+                <?php
+                // for xampp
+                /*$servername = "localhost";
+                $username = "root";
+                $password = "";
+                $dbname = "myDB";*/
+
+                // for socitcloud
+                $servername = "localhost";
+                $username = "webprogmi222_sf221";
+                $password = "xE*Y2nleNVvZm[!!";
+                $dbname = "webprogmi222_sf221";
+                
+                $conn = new mysqli($servername, $username, $password, $dbname);
+                if ($conn->connect_error) {
+                  die("Connection failed: " . $conn->connect_error);
+                }
+                
+                $sql = "INSERT INTO myguests1 (name, email, website, comment, gender)
+                VALUES ('Erika Daduya', 'eddaduya@student.apc.edu.ph', 'sikret.com', 'hello world!', 'Female')";
+                
+                if ($conn->query($sql) === TRUE) {
+                  echo "New record created successfully";
+                } else {
+                  echo "Error: " . $sql . "<br>" . $conn->error;
+                }
+                
+                $conn->close();
+        
+                if ($_SERVER["REQUEST_METHOD"] == "POST") {
+                if (empty($_POST["name"])) {
+                    $nameErr = "Name is required";
+                } else {
+                    $name = test_input($_POST["name"]);
+                    // check if name only contains letters and whitespace
+                    if (!preg_match("/^[a-zA-Z-' ]*$/",$name)) {
+                    $nameErr = "Only letters and white space allowed";
+                    }
+                }
+                
+                if (empty($_POST["email"])) {
+                    $emailErr = "Email is required";
+                } else {
+                    $email = test_input($_POST["email"]);
+                    // check if e-mail address is well-formed
+                    if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+                    $emailErr = "Invalid email format";
+                    }
+                }
+                    
+                if (empty($_POST["website"])) {
+                    $website = "";
+                } else {
+                    $website = test_input($_POST["website"]);
+                    // check if URL address syntax is valid (this regular expression also allows dashes in the URL)
+                    if (!preg_match("/\b(?:(?:https?|ftp):\/\/|www\.)[-a-z0-9+&@#\/%?=~_|!:,.;]*[-a-z0-9+&@#\/%=~_|]/i",$website)) {
+                    $websiteErr = "Invalid URL";
+                    }
+                }
+
+                if (empty($_POST["comment"])) {
+                    $comment = "";
+                } else {
+                    $comment = test_input($_POST["comment"]);
+                }
+
+                if (empty($_POST["gender"])) {
+                    $genderErr = "Gender is required";
+                } else {
+                    $gender = test_input($_POST["gender"]);
+                }
+                }
+
+                function test_input($data) {
+                $data = trim($data);
+                $data = stripslashes($data);
+                $data = htmlspecialchars($data);
+                return $data;
+                }
+                ?>
+
+                <h2>PHP Form Validation Example</h2>
+                <p><span class="error">* required field</span></p>
+                <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">  
+                Name: <input type="text" name="name" value="<?php echo $name;?>">
+                <span class="error">* <?php echo $nameErr;?></span>
+                <br><br>
+                E-mail: <input type="text" name="email" value="<?php echo $email;?>">
+                <span class="error">* <?php echo $emailErr;?></span>
+                <br><br>
+                Website: <input type="text" name="website" value="<?php echo $website;?>">
+                <span class="error"><?php echo $websiteErr;?></span>
+                <br><br>
+                Comment: <textarea name="comment" rows="5" cols="40"><?php echo $comment;?></textarea>
+                <br><br>
+                Gender:
+                <input type="radio" name="gender" <?php if (isset($gender) && $gender=="female") echo "checked";?> value="female">Female
+                <input type="radio" name="gender" <?php if (isset($gender) && $gender=="male") echo "checked";?> value="male">Male
+                <input type="radio" name="gender" <?php if (isset($gender) && $gender=="other") echo "checked";?> value="other">Other  
+                <span class="error">* <?php echo $genderErr;?></span>
+                <br><br>
+                <input type="submit" name="submit" value="Submit">  
+                </form>
+                
+                <?php
+                echo "<h2>Your Input:</h2>";
+                echo $name;
+                echo "<br>";
+                echo $email;
+                echo "<br>";
+                echo $website;
+                echo "<br>";
+                echo $comment;
+                echo "<br>";
+                echo $gender;
+                ?>
+                </div>  
+            </div>
+            
         </div>
     </body>
 </html>
