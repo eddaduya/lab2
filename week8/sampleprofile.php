@@ -1,34 +1,169 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Profile</title>
-    <link rel="stylesheet" href="style.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&family=Jost:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
-</head>
-<body>
-    <script src="script.js"></script>
-    <div class="desktopbg">
-        <div class="gradient"></div>
-        <div class="header"></div>
-        <div class="main-icon"></div>
-        <div class="name"><p>Erika Daduya</p></div>
-        <div class="books">
-            <div class="educ-exp">education & experience</div>
-            <img class="book-icon" src="./icons/educicon.png">
+<html>
+    <head>
+        <meta charset="utf-8">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@300&display=swap" rel="stylesheet">
+        <title>Profile</title>
+    <style>
+        
+    </style>
+    <link rel="stylesheet" href="./style.css">
+    </head>
+    <body>
+        <div class="container">
+
+            <div class="card">
+                <div class="imgBx">
+                    <img src="./webprof/elys.png" alt="prof pic" width="150" height="150">
+                </a>
+                <h2>elys <em>!</em></h2>
+                <p>I am <strong>Erika Alessandra Daduya.</strong>
+                    <br>You can call me <em><b>Elys.</b></em>
+                    <br>I am in my 20th.
+                </p>
+                </div>  
+            </div>
+
+            <div class="card2">
+                <div class="imgBx">
+                    <img src="./icons/educicon.png" alt="educ" width="150" height="150">
+                </a>
+                <h2>education <em>!</em></h2>
+                <p>Graduated from: <b>STI College – Global City</b> in <i>BGC</i>.
+                    <br>Course: <i>BSIT - MI</i>
+                    <br>I am a DOST scholar.
+                </p>
+                </div>  
+            </div>
+
+            <div class="card">
+                <div class="imgBx">
+                    <img src="./webprof/osamu.png" alt="likes" width="150" height="150">
+                </a>
+                <h2>interests <em>!</em></h2>
+                <p>Games: <b>VALORANT</b>
+                    <br>Music: Kpop, Alt R&B, Pop
+                    <br>Libangan: watch (YT, reels, anime), play games, read
+                </p>
+                </div>  
+            </div>
+
+            <div class="card2">
+                <div class="imgBx">
+                    <img src="./webprof/ting.png" alt="life" width="147" height="147">
+                </a>
+                <h2>life <em>!</em></h2>
+                <p>Dream(s): travel to <em>Greece</em>
+                    <br>Pets: two (2) female dogs
+                    <br>Goal(s): to be stable, to finish well
+                    <br>Facts: doesn't like grass, likes mint choco, likes matcha
+                </p>
+                </div>  
+            </div>
+            
+            <div class="quote">
+                <h1><em>“Be brave. Take risks. Nothing can substitute experience.”</em></h1>
+            </div>
+
+            <div class="form">
+                <div>
+                <?php
+                // define variables and set to empty values
+                $nameErr = $emailErr = $genderErr = $websiteErr = "";
+                $name = $email = $gender = $comment = $website = "";
+
+                if ($_SERVER["REQUEST_METHOD"] == "POST") {
+                if (empty($_POST["name"])) {
+                    $nameErr = "Name is required";
+                } else {
+                    $name = test_input($_POST["name"]);
+                    // check if name only contains letters and whitespace
+                    if (!preg_match("/^[a-zA-Z-' ]*$/",$name)) {
+                    $nameErr = "Only letters and white space allowed";
+                    }
+                }
+                
+                if (empty($_POST["email"])) {
+                    $emailErr = "Email is required";
+                } else {
+                    $email = test_input($_POST["email"]);
+                    // check if e-mail address is well-formed
+                    if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+                    $emailErr = "Invalid email format";
+                    }
+                }
+                    
+                if (empty($_POST["website"])) {
+                    $website = "";
+                } else {
+                    $website = test_input($_POST["website"]);
+                    // check if URL address syntax is valid (this regular expression also allows dashes in the URL)
+                    if (!preg_match("/\b(?:(?:https?|ftp):\/\/|www\.)[-a-z0-9+&@#\/%?=~_|!:,.;]*[-a-z0-9+&@#\/%=~_|]/i",$website)) {
+                    $websiteErr = "Invalid URL";
+                    }
+                }
+
+                if (empty($_POST["comment"])) {
+                    $comment = "";
+                } else {
+                    $comment = test_input($_POST["comment"]);
+                }
+
+                if (empty($_POST["gender"])) {
+                    $genderErr = "Gender is required";
+                } else {
+                    $gender = test_input($_POST["gender"]);
+                }
+                }
+
+                function test_input($data) {
+                $data = trim($data);
+                $data = stripslashes($data);
+                $data = htmlspecialchars($data);
+                return $data;
+                }
+                ?>
+
+                <h2>PHP Form Validation Example</h2>
+                <p><span class="error">* required field</span></p>
+                <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">  
+                Name: <input type="text" name="name" value="<?php echo $name;?>">
+                <span class="error">* <?php echo $nameErr;?></span>
+                <br><br>
+                E-mail: <input type="text" name="email" value="<?php echo $email;?>">
+                <span class="error">* <?php echo $emailErr;?></span>
+                <br><br>
+                Website: <input type="text" name="website" value="<?php echo $website;?>">
+                <span class="error"><?php echo $websiteErr;?></span>
+                <br><br>
+                Comment: <textarea name="comment" rows="5" cols="40"><?php echo $comment;?></textarea>
+                <br><br>
+                Gender:
+                <input type="radio" name="gender" <?php if (isset($gender) && $gender=="female") echo "checked";?> value="female">Female
+                <input type="radio" name="gender" <?php if (isset($gender) && $gender=="male") echo "checked";?> value="male">Male
+                <input type="radio" name="gender" <?php if (isset($gender) && $gender=="other") echo "checked";?> value="other">Other  
+                <span class="error">* <?php echo $genderErr;?></span>
+                <br><br>
+                <input type="submit" name="submit" value="Submit">  
+                </form>
+
+                <?php
+                echo "<h2>Your Input:</h2>";
+                echo $name;
+                echo "<br>";
+                echo $email;
+                echo "<br>";
+                echo $website;
+                echo "<br>";
+                echo $comment;
+                echo "<br>";
+                echo $gender;
+                ?>
+                </div>  
+            </div>
+            
         </div>
-        <div class="about-me">
-            <div id="aboutme"><p>about me</p></div>
-            <img class="profile-icon" src="./icons/profile icon.png">
-        </div>
-        <div class="mask-group">
-            <div class="ellipse2"></div>
-            <img class="elys" src="./webprof/elys.png">
-        </div>
-    </div>
-</body>
+    </body>
 </html>
